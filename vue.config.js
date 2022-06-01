@@ -2,8 +2,8 @@
  * @Author: wupeiwen <javapeiwen2010@gmail.com>
  * @Date: 2022-03-21 11:34:22
  * @LastEditors: wupeiwen <javapeiwen2010@gmail.com>
- * @LastEditTime: 2022-05-31 14:54:34
- * @FilePath: \clues-web\vue.config.js
+ * @LastEditTime: 2022-06-01 11:01:24
+ * @FilePath: \vue3-template\vue.config.js
  * @Description: vue-cli配置
  */
 const { defineConfig } = require('@vue/cli-service')
@@ -23,9 +23,9 @@ module.exports = defineConfig(() => {
     }
   }
   // 数据接口代理
-  // option.devServer.proxy[`${process.env.VUE_APP_LOCATION}`] = {
-  //   target: process.env.VUE_APP_TARGET,
-  //   changeOrigin: true
-  // }
+  option.devServer.proxy[`${process.env.VUE_APP_LOCATION}`] = {
+    target: process.env.VUE_APP_TARGET,
+    changeOrigin: true
+  }
   return option
 })

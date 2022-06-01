@@ -2,17 +2,19 @@
  * @Author: wupeiwen <javapeiwen2010@gmail.com>
  * @Date: 2022-01-20 13:57:49
  * @LastEditors: wupeiwen <javapeiwen2010@gmail.com>
- * @LastEditTime: 2022-05-31 15:31:02
- * @FilePath: \clues-web\src\util\http.js
+ * @LastEditTime: 2022-06-01 11:01:37
+ * @FilePath: \vue3-template\src\util\http.js
  * @Description: http封装
  */
 import axios from 'axios'
 
 // 基本路径
-const baseUrl = process.env.VUE_APP_TARGET + process.env.VUE_APP_LOCATION
+const baseUrl = process.env.VUE_APP_LOCATION
 
 // 设置请求头
-axios.defaults.headers.common['X-Coding-Mock-Token'] = process.env.VUE_APP_MOCK_TOKEN
+if (process.env.VUE_APP_MOCK_TOKEN) {
+  axios.defaults.headers.common['X-Coding-Mock-Token'] = process.env.VUE_APP_MOCK_TOKEN
+}
 axios.defaults.headers.get['Content-Type'] = 'application/json'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 axios.defaults.headers.put['Content-Type'] = 'application/json'
