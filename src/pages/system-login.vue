@@ -2,37 +2,55 @@
  * @Author: wupeiwen <javapeiwen2010@gmail.com>
  * @Date: 2022-03-21 14:39:30
  * @LastEditors: wupeiwen <javapeiwen2010@gmail.com>
- * @LastEditTime: 2022-04-18 14:59:57
- * @FilePath: \tea-garden-web\src\pages\system-login.vue
+ * @LastEditTime: 2022-06-01 10:47:23
+ * @FilePath: \information-web\src\pages\system-login.vue
  * @Description: 系统登录页
 -->
 <template>
   <div class="system-login">
-    <div class="inner">
-      <i class="login-logo" />
-      <i class="login-name" />
-      <span class="login-label-username">账号</span>
-      <input class="login-input-username" type="text" v-model="username" />
-      <span class="login-label-password">密码</span>
-      <input class="login-input-password" type="password" v-model="password" />
-      <span class="login-button" @click="login({ username, password })"
-        >登录</span
-      >
-    </div>
+    <section class="form">
+      <section class="title">{{ env.VUE_APP_SYSTEM_NAME }}</section>
+      <el-form label-width="60px">
+        <el-form-item prop="account" label="账号">
+          <el-input v-model="form.account" placeholder="请输入账号" />
+        </el-form-item>
+        <el-form-item prop="password" label="密码">
+          <el-input
+            type="password"
+            v-model="form.password"
+            placeholder="请输入密码"
+          />
+        </el-form-item>
+        <el-form-item prop="code" label="验证码">
+          <el-input
+            v-model="form.code"
+            placeholder="请输入验证码"
+            style="width: 140px; margin-right: 14px"
+          />
+          <el-image :src="base64" />
+        </el-form-item>
+        <el-button style="margin-top: 10px;width: 100%" type="primary" @click="login">
+          登录
+        </el-button>
+      </el-form>
+    </section>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 export default {
-  data () {
-    return {
-      username: '',
-      password: ''
+  computed: {
+    ...mapState('system-login', ['form', 'base64']),
+    env () {
+      return process.env
     }
   },
   methods: {
-    ...mapActions('system-login', ['login'])
+    ...mapActions('system-login', ['getCode', 'login'])
+  },
+  created () {
+    this.getCode()
   }
 }
 </script>
@@ -41,98 +59,27 @@ export default {
 .system-login {
   background: #eff7f8;
   height: 100%;
-  width: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  .inner {
+  position: relative;
+  .title {
+    font-size: 30px;
+    font-weight: bold;
+    color: #0050a0;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 30px;
+  }
+  .form {
+    width: 400px;
+    height: 350px;
+    position: absolute;
+    left: calc(50% - 200px);
+    top: calc(50% - 175px);
     background: #ffffff;
-    border-radius: 35px;
-    width: calc(100% - 80px);
-    height: calc(100% - 49.5px);
-    margin: 25px 40px 24.5px 40px;
-    position: relative;
-    .login-logo {
-      display: block;
-      position: absolute;
-      left: 560px;
-      top: 74px;
-      width: 70.5px;
-      height: 57px;
-      background-image: url("/public/image/system-login/icon-system-logo.png");
-      background-position: center;
-      background-size: 100%;
-      background-repeat: no-repeat;
-    }
-    .login-name {
-      display: block;
-      position: absolute;
-      left: 575.5px;
-      top: 139px;
-      width: 50px;
-      height: 29.5px;
-      background-image: url("/public/image/system-login/icon-system-name.png");
-      background-position: center;
-      background-size: 100%;
-      background-repeat: no-repeat;
-    }
-    @mixin login-label {
-      font-size: 20px;
-      font-family: PingFang SC-Medium, PingFang SC;
-      font-weight: 500;
-      color: #089bab;
-      line-height: 23px;
-    }
-    .login-label-username {
-      @include login-label;
-      position: absolute;
-      left: 371px;
-      top: 243.5px;
-    }
-    .login-label-password {
-      @include login-label;
-      position: absolute;
-      left: 371px;
-      top: 349px;
-    }
-    @mixin login-input {
-      font-size: 20px;
-      font-family: PingFang SC-Regular, PingFang SC;
-      font-weight: 400;
-      color: #121a2d;
-      width: 449px;
-      height: 51px;
-      line-height: 51px;
-      border-top: 0;
-      border-right: 0;
-      border-bottom: 1px solid #121a2d;
-      border-left: 0;
-    }
-    .login-input-username {
-      @include login-input;
-      position: absolute;
-      left: 371px;
-      bottom: 430px;
-    }
-    .login-input-password {
-      @include login-input;
-      position: absolute;
-      left: 371px;
-      bottom: 326px;
-    }
-    .login-button {
-      position: absolute;
-      left: 370px;
-      bottom: 175.5px;
-      width: 458px;
-      height: 50px;
-      background: #089bab;
-      font-family: PingFang SC-Bold, PingFang SC;
-      font-weight: bold;
-      color: #ffffff;
-      text-align: center;
-      line-height: 50px;
-    }
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.16);
+    border-radius: 4px;
+    border: 1px solid #d1d5d9;
+    padding: 30px 30px;
+    box-sizing: border-box;
   }
 }
 </style>
